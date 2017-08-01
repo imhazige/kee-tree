@@ -1,74 +1,74 @@
 .zk_tree_icon_expand {
-	background-image: url("../images/tree/p.gif");
+	background-image: url("../images/p.gif");
 }
 
 .zk_tree_icon_collapse {
-	background-image: url("../images/tree/m.gif");
+	background-image: url("../images/m.gif");
 }
 
 .zk_tree_icon_expand_top {
-	background-image: url("../images/tree/Fp.gif");
+	background-image: url("../images/Fp.gif");
 }
 
 .zk_tree_icon_expand_mid {
-	background-image: url("../images/tree/Tp.gif");
+	background-image: url("../images/Tp.gif");
 }
 
 .zk_tree_icon_expand_end {
-	background-image: url("../images/tree/Lp.gif");
+	background-image: url("../images/Lp.gif");
 }
 
 .zk_tree_icon_collapse_top {
-	background-image: url("../images/tree/Fm.gif");
+	background-image: url("../images/Fm.gif");
 }
 
 .zk_tree_icon_collapse_mid {
-	background-image: url("../images/tree/Tm.gif");
+	background-image: url("../images/Tm.gif");
 }
 
 .zk_tree_icon_collapse_end {
-	background-image: url("../images/tree/Lm.gif");
+	background-image: url("../images/Lm.gif");
 }
 
 .zk_tree_icon_leaf {
-	background-image: url("../images/tree/T.gif");
+	background-image: url("../images/T.gif");
 }
 
 .zk_tree_icon_leaf_top {
-	background-image: url("../images/tree/F.gif");
+	background-image: url("../images/F.gif");
 }
 
 .zk_tree_icon_twig {
-	background-image: url("../images/tree/L.gif");
+	background-image: url("../images/L.gif");
 }
 
 .zk_tree_icon_line {
-	background-image: url("../images/tree/I.gif");
+	background-image: url("../images/I.gif");
 }
 
 .zk_tree_icon_blank {
-	background-image: url("../images/tree/b.gif");
+	background-image: url("../images/b.gif");
 }
 
 .zk_tree_icon_default {	
-	background-image: url("../images/tree/file.gif");
+	background-image: url("../images/file.gif");
 	background-position: 2px 0px
 }
 
 .zk_tree_icon_folder {	
-	background-image: url("../images/tree/folder.gif");
+	background-image: url("../images/folder.gif");
 	background-position: 2px 0px
 }
 
 .zk_tree_icon_folderopen {	
-	background-image: url("../images/tree/folderopen.gif");
+	background-image: url("../images/folderopen.gif");
 	background-position: 2px 0px
 }
 
 .zk_tree_icon_collapse_noline{
-	background: url("../images/tree/arrows.gif") no-repeat scroll -16px 0 transparent;
+	background: url("../images/arrows.gif") no-repeat scroll -16px 0 transparent;
 }
 
 .zk_tree_icon_expand_noline{
-	background: url("../images/tree/arrows.gif") no-repeat scroll 0 0 transparent;
+	background: url("../images/arrows.gif") no-repeat scroll 0 0 transparent;
 }

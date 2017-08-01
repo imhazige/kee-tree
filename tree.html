@@ -12,7 +12,6 @@
 
 
 	<link rel="stylesheet" type="text/css" href="example/demo.css">
-	<link rel="stylesheet" type="text/css" href="css/base.css">
 	<link rel="stylesheet" type="text/css" href="css/tree.css">
 
 	<script type="text/javascript" src="k-tree.js"></script>
@@ -26,7 +25,7 @@
 		function initTree(showline) {
 			var cont = kzg.get("cont");
 			cont.innerHTML = '';
-			kzg.Tree.S = 'images/tree/b.gif';
+			kzg.Tree.S = 'images/b.gif';
 
 			window.tree = new kzg.Tree({ showline: showline, to: cont });
 			window.gNode = new kzg.TreeNode({ tree: tree, text: "demos", key: "demo", iconCls: 'demoicon' });
@@ -36,7 +35,7 @@
 				zklog('tree.selectedNode:' + tree.selectedNode.caption);
 			});
 			tree.oncontextmenu = function (e, node) {
-				zklog('context menu on node.');
+				zklog('context menu on node.' + node.caption);
 
 				return false;
 			};

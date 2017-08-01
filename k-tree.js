@@ -1,89 +1,34 @@
-Array.prototype.indexOfKey = function(key) {
-	for (var i = 0; i < this.length; i++) {
-		if (this[i] && this[i].key == key) {
-			return i;
-		}
+(function () {
+	function erase(arr, elm) {
+		for (var i = 0; i < arr.length; i++)
+			if (elm == arr[i])
+				arr[i] = null;
 	}
-
-	return -1;
-};
-
-Array.prototype.indexOf = function(elm) {
-	for (var i = 0; i < this.length; i++)
-		if (elm == this[i])
-			return i;
-	return -1;
-}
-
-Array.prototype.erase = function(elm) {
-	for (var i = 0; i < this.length; i++)
-		if (elm == this[i])
-			this[i] = null;
-}
-
-Array.prototype.get = function(key) {
-	var index = this.indexOfKey(key);
-
-	if (-1 == index)
-		return null;
-
-	return this[index];
-}
-
-Array.prototype.removei = function(index) {
-	if (index < 0 || index >= this.length)
-		return;
-	for (var i = index; i < this.length; i++)
-		this[i] = this[i + 1];
-	this.length--;
-}
-
-// remove the element in the array
-Array.prototype.removeo = function(obj) {
-	var bl;
-
-	bl = false;
-	for (var i = 0; i < this.length; i++) {
-		if (obj === this[i] || bl) {
-			this[i] = this[i + 1];
-			bl = true;
-		}
-	}
-	if (bl) {
-		this.length--;
-	}
-}
-
-if (window.zk) {
-	throw new Error("zk has registered.");
-}
-(function() {
-	window.STRING_EMPTY = "";
 
 	var userAgent = navigator.userAgent.toLowerCase();
 
-	window.zk = {
-		browser : {
-			version : (userAgent.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [
-					0, '0'])[1],
-			safari : /webkit/.test(userAgent),
-			opera : /opera/.test(userAgent),
-			msie : /msie/.test(userAgent) && !/opera/.test(userAgent),
-			mozilla : /mozilla/.test(userAgent)
-					&& !/(compatible|webkit)/.test(userAgent),
-			chrome : /chrome/.test(userAgent)
+	window.kzg = {
+		browser: {
+			version: (userAgent.match(/.+(?:rv|it|ra|ie)[\/: ]([\d.]+)/) || [
+				0, '0'])[1],
+			safari: /webkit/.test(userAgent),
+			opera: /opera/.test(userAgent),
+			msie: /msie/.test(userAgent) && !/opera/.test(userAgent),
+			mozilla: /mozilla/.test(userAgent)
+			&& !/(compatible|webkit)/.test(userAgent),
+			chrome: /chrome/.test(userAgent)
 		},
-		get : function(id) {
+		get: function (id) {
 			return document.getElementById(id);
 		},
-		setStyle : function(el, styleText) {
+		setStyle: function (el, styleText) {
 			if (this.browser.msie && this.browser.version < 8) {
 				el.style.cssText = styleText;
 			} else {
 				el.setAttribute("style", styleText);
 			}
 		},
-		addCss : function(el, css) {
+		addCss: function (el, css) {
 			if (!css || '' == css) {
 				return;
 			}
@@ -101,7 +46,7 @@ if (window.zk) {
 			}
 			this.setCss(el, cssName);
 		},
-		removeCss : function(el, css) {
+		removeCss: function (el, css) {
 			if (!css || '' == css) {
 				return;
 			}
@@ -115,7 +60,7 @@ if (window.zk) {
 			}
 			this.setCss(el, cssName);
 		},
-		_getCsss : function(el) {
+		_getCsss: function (el) {
 			var ncss = {};
 			var ocss = this.getCss(el);
 			var oacsss = ocss ? ocss.split(/\s+/) : [];
@@ -125,21 +70,21 @@ if (window.zk) {
 
 			return ncss;
 		},
-		getCss : function(el) {
+		getCss: function (el) {
 			if (this.browser.msie && this.browser.version < 8) {
 				return el.getAttribute("className");
 			} else {
 				return el.getAttribute("class");
 			}
 		},
-		setCss : function(el, argCssName) {
+		setCss: function (el, argCssName) {
 			if (this.browser.msie && this.browser.version < 8) {
 				el.setAttribute("className", argCssName);
 			} else {
 				el.setAttribute("class", argCssName);
 			}
 		},
-		clearCss : function(el) {
+		clearCss: function (el) {
 			this.setStyle('');
 			if (this.browser.msie && this.browser.version < 8) {
 				el.removeAttribute("className");
@@ -147,76 +92,46 @@ if (window.zk) {
 				el.removeAttribute("class");
 			}
 		},
-		/**
-		 * get the left of the element
-		 */
-		getPixLeft : function(argObj) {
-			var pixleft;
-
-			pixleft = 0;
-			while (argObj) {
-				pixleft += argObj.offsetLeft;
-				argObj = argObj.offsetParent;
-			};
-
-			return pixleft;
-		},
-		/**
-		 * get the top of the element
-		 */
-		getPixTop : function(argObj) {
-			var pixtop;
-
-			pixtop = 0;
-			while (argObj) {
-				pixtop += argObj.offsetTop;
-				argObj = argObj.offsetParent;
-			};
-
-			return pixtop;
-		},
-
-		remove : function(argObj) {
+		remove: function (argObj) {
 			if (argObj.parentNode) {
 				argObj.parentNode.removeChild(argObj);
 			}
 		},
-
-		on : function(elem, type, fn) {
+		on: function (elem, type, fn) {
 			if (elem.addEventListener)
-				elem.addEventListener(type, function(e) {
-							fn(e);
-						}, false);
+				elem.addEventListener(type, function (e) {
+					fn(e);
+				}, false);
 			else if (elem.attachEvent)
-				elem.attachEvent("on" + type, function() {
-							fn(window.event);
-						});
+				elem.attachEvent("on" + type, function () {
+					fn(window.event);
+				});
 		},
 		/*
 		 * un : function(el, type, fn) { $(el).unbind(type, fn); },
 		 */
-		oe : function(o, type, fn) {
+		oe: function (o, type, fn) {
 			if (!o.eves)
 				o.eves = [];
 			if (!o.eves[type])
 				o.eves[type] = [];
 			o.eves[type][o.eves[type].length] = fn;
 		},
-		ue : function(o, type, fn) {
+		ue: function (o, type, fn) {
 			if (!o.eves)
 				return;
 			if (!o.eves[type])
 				return;
-			o.eves[type].erase(fn);
+			erase(o.eves[type], fn);
 		},
-		fire : function(o, type, ops) {
+		fire: function (o, type, ops) {
 			if (!o.eves)
 				return;
 			if (!o.eves[type])
 				return;
 			var e = {
-				src : o,
-				stop : false
+				src: o,
+				stop: false
 			};
 			for (var i = 0; i < o.eves[type].length; i++) {
 				if (o.eves[type][i]) {
@@ -226,15 +141,15 @@ if (window.zk) {
 				}
 			}
 		},
-		cr : function(tag) {
+		cr: function (tag) {
 			return document.createElement(tag);
 		},
-		crradio : function(argName, argIsChecked) {
+		crradio: function (argName, argIsChecked) {
 			var radio;
 
 			if (this.browser.msie && this.browser.version < 8) {
 				var text = "<input type=\"radio\" name=\"" + argName
-						+ "\" value=\"checked\" >";
+					+ "\" value=\"checked\" >";
 				radio = document.createElement(text);
 			} else {
 				radio = document.createElement("input");
@@ -246,35 +161,17 @@ if (window.zk) {
 
 			return radio;
 		},
-		log : function(msg) {
-			if (!this.console) {
-				return;
-			}
-			this.console.value += msg + '\n';
+		ok: function (fn) {
+			kzg.oe(kzg, 'ok', fn);
 		},
-		ok : function(fn) {
-			zk.oe(zk, 'ok', fn);
-		},
-		isnum : function(argNum) {
-			if (0 != argNum && !argNum) {
-				return false;
-			}
-
-			if ("" == argNum) {
-				return false;
-			}
-
-			return !isNaN(new Number(argNum));
-		},
-
-		inade : function(argObj, argStrsomewhere, argNewObj) {
+		inade: function (argObj, argStrsomewhere, argNewObj) {
 			var parent;
 
 			switch (argStrsomewhere.toLowerCase()) {
-				case "beforebegin" :
+				case "beforebegin":
 					argObj.parentNode.insertBefore(argNewObj, argObj);
 					break;
-				case "afterbegin" :
+				case "afterbegin":
 					var nn = !argObj.childNodes ? null : argObj.childNodes[0];
 					if (!nn) {
 						nn = null
@@ -282,17 +179,16 @@ if (window.zk) {
 					;
 					argObj.insertBefore(argNewObj, nn);
 					break;
-				case "beforeend" :
+				case "beforeend":
 					argObj.appendChild(argNewObj);
 					break;
-				case "afterend" :
+				case "afterend":
 					var nnode = this.nextnode(argObj);
 					argObj.parentNode.insertBefore(argNewObj, nnode);
 					break;
 			}
 		},
-
-		nextnode : function(argObj) {
+		nextnode: function (argObj) {
 			var parent, obj;
 
 			obj = null;
@@ -308,53 +204,25 @@ if (window.zk) {
 				}
 			}
 			return obj;
-		},
-		/**
-		 * adjust the x,y point to prevent from oversteping out the window
-		 */
-		adjustPosition : function(x, y, width, height) {
-			var cw;
-			var ch;
-
-			cw = document.body.clientWidth;
-			ch = document.body.clientHeight;
-			// left
-			if (x + width > cw) {
-				x = cw - width;
-			}
-			x = Math.max(0, x);
-			// zk.log("x : height:document.body.clientWidth" + x +"|" + width +
-			// "|" + cw);
-			// zk.log("y : height:document.body.clientHeight" + y +"|" + height
-			// + "|" + ch);
-			// top
-			if (y + height > ch) {
-				y = ch - height;
-			}
-			y = Math.max(0, y);
-
-			return {
-				"x" : x,
-				"y" : y
-			}
 		}
+		
 	};
 
-	zk.Url = function(argOrginUrl) {
+	kzg.Url = function (argOrginUrl) {
 		var _this = this;
 		var params = {};
 		var baseurl = null;
 
-		this.putParam = function(argKey, argValue) {
+		this.putParam = function (argKey, argValue) {
 			if (argKey && argValue) {
 				params[argKey] = argValue;
 			}
 		};
-		this.getParam = function(argKey) {
+		this.getParam = function (argKey) {
 			return params[argKey];
 		};
 
-		this.toString = function() {
+		this.toString = function () {
 			var keys = params.keyset;
 			var url = baseurl;
 			var qs = "?";
@@ -391,9 +259,9 @@ if (window.zk) {
 		}
 	};
 
-	zk.on(window, "load", function() {
-				zk.fire(zk, 'ok');
-			});
+	kzg.on(window, "load", function () {
+		kzg.fire(kzg, 'ok');
+	});
 })();
 
 /**
@@ -407,12 +275,12 @@ if (window.zk) {
  * @icon the image of this node
  * @expandStyle "always" or "auto"(default),it is useful set to "always" when
  *              this is a lazy-loading node(such as ajax-loading)
- * @type zk.Tree.CHECKBOX or zk.Tree.RADIOBOX
+ * @type kzg.Tree.CHECKBOX or kzg.Tree.RADIOBOX
  * @configend
  * @require [base] Tree.js
  */
 
-zk.TreeNode = function(ops) {
+kzg.TreeNode = function (ops) {
 	var tree = ops.tree;
 	this.tree = tree;
 
@@ -420,9 +288,9 @@ zk.TreeNode = function(ops) {
 	// keydex is the index and key of every node,but is not really the index
 	node.keydex = null;
 	// nbody is the nodebody
-	var nbody = zk.cr("span");
-	var container = zk.cr("span");
-	zk.inade(container, "afterBegin", nbody);
+	var nbody = kzg.cr("span");
+	var container = kzg.cr("span");
+	kzg.inade(container, "afterBegin", nbody);
 	node.body = nbody;
 	node.container = container;
 
@@ -444,86 +312,86 @@ zk.TreeNode = function(ops) {
 	node.icon = icon;
 	node.tree = tree;
 	node.lineIcon = [];
-	node.type = ops.type ? ops.type : zk.Tree.NORMAL;
+	node.type = ops.type ? ops.type : kzg.Tree.NORMAL;
 	node.children = [];
 	node.key = ops.key;
 
 	var depth;
 	depth = tree.depth;
-	node.label = zk.cr("span");
-	zk.setStyle(container, "margin:0px;padding:0px;white-space:nowrap;");
+	node.label = kzg.cr("span");
+	kzg.setStyle(container, "margin:0px;padding:0px;white-space:nowrap;");
 
-	zk.inade(nbody, "beforeEnd", node.label);
-	zk
-			.setStyle(nbody,
-					'margin:0px;cursor:default;text-align:left;color:black;font-size:9pt;');
+	kzg.inade(nbody, "beforeEnd", node.label);
+	kzg
+		.setStyle(nbody,
+		'margin:0px;cursor:default;text-align:left;color:black;font-size:9pt;');
 
 	if (ops.iconCls) {
-		icon.src = zk.Tree.S;
-		zk.setCss(icon, ops.iconCls);
+		icon.src = kzg.Tree.S;
+		kzg.setCss(icon, ops.iconCls);
 	} else {
 		if (ops.icon) {
 			icon.src = ops.icon;
 		} else {
-			icon.src = zk.Tree.S;
-			zk.setCss(icon, 'zk_tree_icon_default');
+			icon.src = kzg.Tree.S;
+			kzg.setCss(icon, 'zk_tree_icon_default');
 		}
 	}
 
-	zk.setStyle(node.label, tree.labelStyle);
+	kzg.setStyle(node.label, tree.labelStyle);
 
-	zk.inade(nbody, "afterBegin", icon)
+	kzg.inade(nbody, "afterBegin", icon)
 
 	icon.tabIndex = node.label.tabIndex = 1;
 	icon.hideFocus = true;
 
 	// Joker:all add param node
-	node.select = function() {
-		if (!node.isEnable()){
+	node.select = function () {
+		if (!node.isEnable()) {
 			return;
 		}
 		tree.doSelect(node);
 	};
-	node.enable = function(enable){
+	node.enable = function (enable) {
 		node.disabled = false === enable;
 	};
-	node.isEnable= function(){
+	node.isEnable = function () {
 		return !node.disabled;
 	};
-	node.isVisible = function() {
+	node.isVisible = function () {
 		var str;
 
 		str = node.container.style.display;
 		return str && str != "none";
 	};
 
-	zk.on(node.label, 'click', node.select);
-	zk.on(node.icon, 'click', node.select);
-	nbody.oncontextmenu = function(){
+	kzg.on(node.label, 'click', node.select);
+	kzg.on(node.icon, 'click', node.select);
+	nbody.oncontextmenu = function () {
 		var e;
-		if (zk.browser.msie){
-			e=window.event;
-		}else{
-			e=arguments[0];
+		if (kzg.browser.msie) {
+			e = window.event;
+		} else {
+			e = arguments[0];
 		}
-		if (tree.oncontextmenu) return tree.oncontextmenu(e,node);		
+		if (tree.oncontextmenu) return tree.oncontextmenu(e, node);
 	};
 
-	node.addExIcon = function() {
+	node.addExIcon = function () {
 		if (!node.exIcon) {
 			node.exIcon = new Image();
 			node.exIcon.align = "absmiddle";
-			node.exIcon.src = zk.Tree.S;
-			zk.on(node.exIcon, 'click', function() {
-						node.expand();
-					});
+			node.exIcon.src = kzg.Tree.S;
+			kzg.on(node.exIcon, 'click', function () {
+				node.expand();
+			});
 			var o = node.icon.src == '' ? node.label : node.icon;
-			zk.inade(o, "beforeBegin", node.exIcon);
+			kzg.inade(o, "beforeBegin", node.exIcon);
 		}
 	}
 
 	// delete all the child of the node
-	node.removeChildren = function() {
+	node.removeChildren = function () {
 		var count = node.getChildrenCount();
 
 		for (var i = 0; node.children[i];) {
@@ -534,7 +402,7 @@ zk.TreeNode = function(ops) {
 	/*
 	 * node.setExpandStyle argStyle:["auto"|"always"]:node's expand styles
 	 */
-	node.setExpandStyle = function(argStyle) {
+	node.setExpandStyle = function (argStyle) {
 		if (null == argStyle) {
 			argStyle = node.expandStyle;
 		}
@@ -562,7 +430,7 @@ zk.TreeNode = function(ops) {
 	 *            [true|false]:is the sub node's child node need do the same
 	 *            thing
 	 */
-	node.expand = function(isShow, incSub) {
+	node.expand = function (isShow, incSub) {
 		// Joker:
 		// if(node.children.length==0)return;
 		if (node.children.length == 0 && node.expandStyle != "always")
@@ -586,38 +454,38 @@ zk.TreeNode = function(ops) {
 
 		// Joker:add node Eventarg to node.onexpand
 		if (node.expanded) {
-			zk.fire(node, 'expand');
+			kzg.fire(node, 'expand');
 		} else {
-			zk.fire(node, 'collapse');
+			kzg.fire(node, 'collapse');
 		}
 	};
 
-	if (zk.Tree.CHECKBOX == node.type) {
+	if (kzg.Tree.CHECKBOX == node.type) {
 		var chkBox = null;
 
-		chkBox = zk.cr("input");
+		chkBox = kzg.cr("input");
 		chkBox.setAttribute("type", "checkbox");
 		chkBox.align = "absmiddle";
 		chkBox.style.verticalAlign = 'middle';
-		zk.inade(node.label, "beforeBegin", chkBox);
+		kzg.inade(node.label, "beforeBegin", chkBox);
 		node.checkBox = chkBox;
 		chkBox.checked = node.checked = false;
 		// fire oncheck event
-		zk.on(chkBox, 'click', function() {
-					node.checked = chkBox.checked;
-					zk.fire(node, 'click');
-				});
-	} else if (zk.Tree.RADIOBOX == node.type) {
+		kzg.on(chkBox, 'click', function () {
+			node.checked = chkBox.checked;
+			kzg.fire(node, 'click');
+		});
+	} else if (kzg.Tree.RADIOBOX == node.type) {
 		node.rdobox = null;
 		node.checked = false;
 
-		var rdoBox = zk.crradio(null, false);
+		var rdoBox = kzg.crradio(null, false);
 		rdoBox.style.verticalAlign = 'middle';
-		zk.inade(node.label, "beforeBegin", rdoBox);
+		kzg.inade(node.label, "beforeBegin", rdoBox);
 		// fire oncheck event
-		zk.on(rdoBox, 'click', function() {
-					node.setRadioCheck();
-				});
+		kzg.on(rdoBox, 'click', function () {
+			node.setRadioCheck();
+		});
 		node.rdoBox = rdoBox;
 	}
 
@@ -632,25 +500,25 @@ zk.TreeNode = function(ops) {
 	 * @param _argFireEvent
 	 *            if fire the oncheck event
 	 */
-	node.setChecked = function(_argChecked, _argsetChild , _argFireEvent) {
-		if (zk.Tree.CHECKBOX != node.type) {
+	node.setChecked = function (_argChecked, _argsetChild, _argFireEvent) {
+		if (kzg.Tree.CHECKBOX != node.type) {
 			return;
 		}
-		if (_argFireEvent){
-			
+		if (_argFireEvent) {
+
 		}
-		
+
 		// Joker:care this check
 		// is necessary or it will cause infinitude recursion
 		if (node.checkBox.checked != _argChecked) {
 			node.checked = node.checkBox.checked = _argChecked;
-			if (_argFireEvent){
-				zk.fire(node, 'click');
+			if (_argFireEvent) {
+				kzg.fire(node, 'click');
 			}
 		}
 		if (_argsetChild) {
 			for (var i = 0; i < node.getChildrenCount(); i++) {
-				node.children[i].setChecked(_argChecked, true,_argFireEvent);
+				node.children[i].setChecked(_argChecked, true, _argFireEvent);
 			}
 		}
 	};
@@ -662,8 +530,8 @@ zk.TreeNode = function(ops) {
 	 * @param _argFireEvent
 	 *            is fire the event
 	 */
-	node.setRadioCheck = function() {
-		if (zk.Tree.RADIOBOX != node.type) {
+	node.setRadioCheck = function () {
+		if (kzg.Tree.RADIOBOX != node.type) {
 			throw new Error("this is not a radiobox node.");
 		}
 
@@ -687,28 +555,28 @@ zk.TreeNode = function(ops) {
 		// fire
 		if (node.parent && node.parent != tree.root) {
 			if (oNode != node) {
-				zk.fire(node.parent, 'rdocheckchanged', {
-							preNode : oNode,
-							curNode : node
-						});
+				kzg.fire(node.parent, 'rdocheckchanged', {
+					preNode: oNode,
+					curNode: node
+				});
 			}
 		}
 
 	};
 
-	this.setCaption = function(argCaption) {
+	this.setCaption = function (argCaption) {
 		node.caption = argCaption;
 		node.label.innerHTML = argCaption;
 	};
 	node.setCaption(ops.text);
 
-	node.remove = function() {
+	node.remove = function () {
 		tree.removeNode(node);
 	}
-	node.getChildrenCount = function() {
+	node.getChildrenCount = function () {
 		return node.children ? node.children.length : 0
 	};
-	node.getTier = function() {
+	node.getTier = function () {
 		return node.tier;
 	}
 
@@ -716,33 +584,33 @@ zk.TreeNode = function(ops) {
 }
 
 
-zk.Tree = function(ops) {
+kzg.Tree = function (ops) {
 	var tree = this;
 
 	var defaultTheme = {
-		zk_tree_icon_blank : null,
-		zk_tree_icon_leaf_top : null,
-		zk_tree_icon_leaf : null,
-		zk_tree_icon_twig : null,
-		zk_tree_icon_collapse : null,
-		zk_tree_icon_expand : null,
-		zk_tree_icon_collapse_top : null,
-		zk_tree_icon_expand_top : null,
-		zk_tree_icon_collapse_mid : null,
-		zk_tree_icon_expand_mid : null,
-		zk_tree_icon_collapse_end : null,
-		zk_tree_icon_expand_end : null
+		zk_tree_icon_blank: null,
+		zk_tree_icon_leaf_top: null,
+		zk_tree_icon_leaf: null,
+		zk_tree_icon_twig: null,
+		zk_tree_icon_collapse: null,
+		zk_tree_icon_expand: null,
+		zk_tree_icon_collapse_top: null,
+		zk_tree_icon_expand_top: null,
+		zk_tree_icon_collapse_mid: null,
+		zk_tree_icon_expand_mid: null,
+		zk_tree_icon_collapse_end: null,
+		zk_tree_icon_expand_end: null
 	};
 
-	if (!zk.Tree.SI) {
-		zk.Tree.SI = new Image();
-		zk.Tree.SI.src = zk.Tree.S
+	if (!kzg.Tree.SI) {
+		kzg.Tree.SI = new Image();
+		kzg.Tree.SI.src = kzg.Tree.S
 	}
 	var COLOR_SELECT_BG = "highlight";
 
 	var labelStyle = ops.labelStyle
-			? labelStyle
-			: "padding:0;margin-left:2;vertical-align:middle;text-align:left;"
+		? labelStyle
+		: "padding:0;margin-left:2;vertical-align:middle;text-align:left;"
 	this.labelStyle = labelStyle;
 	tree.depth = 0;
 	var count = 0, nodes = [];
@@ -760,26 +628,26 @@ zk.Tree = function(ops) {
 	var root = {};
 	root.children = [];
 	root.expanded = true;
-	root.getTier = function() {
+	root.getTier = function () {
 		return 0;
 	}
 
 	tree.selectedNode = null;
 	// return the object's index in the array,return -1 if not found
 
-	var isExpandable = function(srcNode) {
+	var isExpandable = function (srcNode) {
 		return srcNode.expandStyle == "always" || srcNode.hasChild;
 	};// end md
 
-	var isFirstTop = function(srcNode) {
+	var isFirstTop = function (srcNode) {
 		return srcNode.parent == root && root.children[0] == srcNode;
 	};// end md
 
-	var isLeaf = function(srcNode) {
+	var isLeaf = function (srcNode) {
 		return srcNode.next != null;
 	};// end md
 
-	var isTwig = function(srcNode) {
+	var isTwig = function (srcNode) {
 		return srcNode.next == null;
 	};// end md
 
@@ -789,7 +657,7 @@ zk.Tree = function(ops) {
 	 * 
 	 * @param srcNode
 	 */
-	var setExIcon = function(srcNode) {
+	var setExIcon = function (srcNode) {
 		var strImgkey;
 		var expanded = srcNode.expanded;
 
@@ -797,7 +665,7 @@ zk.Tree = function(ops) {
 			// not expandable
 			if (!tree.showline) {
 				// if (srcNode.exIcon) {
-				// zk.remove(srcNode.exIcon);
+				// kzg.remove(srcNode.exIcon);
 				// return;
 				// }
 				strImgkey = 'zk_tree_icon_blank';
@@ -821,26 +689,26 @@ zk.Tree = function(ops) {
 		} else {
 			// need show expand
 			if (!tree.showline) {
-				strImgkey = expanded?'zk_tree_icon_collapse_noline':'zk_tree_icon_expand_noline';
+				strImgkey = expanded ? 'zk_tree_icon_collapse_noline' : 'zk_tree_icon_expand_noline';
 			} else {
 				if (isFirstTop(srcNode)) {
 					if (isTwig(srcNode)) {
 						strImgkey = expanded
-								? "zk_tree_icon_collapse"
-								: "zk_tree_icon_expand";
+							? "zk_tree_icon_collapse"
+							: "zk_tree_icon_expand";
 					} else {
 						strImgkey = expanded
-								? "zk_tree_icon_collapse_top"
-								: "zk_tree_icon_expand_top";
+							? "zk_tree_icon_collapse_top"
+							: "zk_tree_icon_expand_top";
 					}
 				} else if (isLeaf(srcNode)) {
 					strImgkey = expanded
-							? "zk_tree_icon_collapse_mid"
-							: "zk_tree_icon_expand_mid";
+						? "zk_tree_icon_collapse_mid"
+						: "zk_tree_icon_expand_mid";
 				} else {
 					strImgkey = expanded
-							? "zk_tree_icon_collapse_end"
-							: "zk_tree_icon_expand_end";
+						? "zk_tree_icon_collapse_end"
+						: "zk_tree_icon_expand_end";
 				}
 			}
 		}
@@ -852,10 +720,10 @@ zk.Tree = function(ops) {
 		}
 		if (srcNode.exIcon) {
 			srcNode.icon.style.marginLeft = "0";
-			zk.setCss(srcNode.exIcon, strImgkey);
+			kzg.setCss(srcNode.exIcon, strImgkey);
 		} else {
 			if (!tree.showline) {
-				srcNode.icon.style.marginLeft = zk.Tree.SI.width;
+				srcNode.icon.style.marginLeft = kzg.Tree.SI.width;
 			}
 		}
 
@@ -866,42 +734,42 @@ zk.Tree = function(ops) {
 	/*
 	 * setLine :set the "|" line icon
 	 */
-	var setLine = function(srcNode, idx) {
+	var setLine = function (srcNode, idx) {
 		// if (!tree.showline)
 		// return;
 
 		if (srcNode.hasChild) {
 			for (var i = 0; i < srcNode.children.length; i++) {
-				zk.setCss(srcNode.children[i].lineIcon[idx], !tree.showline
-								? 'zk_tree_icon_blank'
-								: 'zk_tree_icon_line');
+				kzg.setCss(srcNode.children[i].lineIcon[idx], !tree.showline
+					? 'zk_tree_icon_blank'
+					: 'zk_tree_icon_line');
 				setLine(srcNode.children[i], idx);
 			}
 		}
 	}
 	this.setLine = setLine;
 
-	var doSelect = function(srcNode) {
+	var doSelect = function (srcNode) {
 		// reset previous selected node
 		if (tree.selectedNode != null) {
 			tree.selectedNode.label.style.background = tree.selectedNode.label._background;
 			tree.selectedNode.label.style.color = tree.selectedNode.label._color;
 		}
 		srcNode.label._background = srcNode.label.style.background
-				? srcNode.label.style.background
-				: 'none';
+			? srcNode.label.style.background
+			: 'none';
 		srcNode.label._color = srcNode.label.style.color
-				? srcNode.label.style.color
-				: 'black';
+			? srcNode.label.style.color
+			: 'black';
 		srcNode.label.style.background = COLOR_SELECT_BG;
 		srcNode.label.style.color = "highlighttext";
 
 		tree.selectedNode = srcNode;
-		zk.fire(tree, 'select');
+		kzg.fire(tree, 'select');
 	}
 	this.doSelect = doSelect;
 
-	this.enable = function(enable) {
+	this.enable = function (enable) {
 		var enable = false !== enable;
 
 		for (var i = 0; i < count; i++) {
@@ -909,11 +777,11 @@ zk.Tree = function(ops) {
 		}
 	};
 
-	var addNode = function(toNode, node) {
+	var addNode = function (toNode, node) {
 		node.tier = toNode.getTier() + 1;
 		toNode.children[toNode.children.length] = node;
 		var o = toNode == root ? tree.body : toNode.container;
-		zk.inade(o, "beforeEnd", node.container);
+		kzg.inade(o, "beforeEnd", node.container);
 		node.parent = toNode;
 		// set the brother:can optimize
 		if (toNode.hasChild) {
@@ -944,8 +812,8 @@ zk.Tree = function(ops) {
 			for (var i = node.tier - 2; i >= 0; i--) {
 				var img = new Image();
 				img.align = "absmiddle";
-				img.src = zk.Tree.S;
-				zk.inade(node.body, "afterBegin", img);
+				img.src = kzg.Tree.S;
+				kzg.inade(node.body, "afterBegin", img);
 				node.lineIcon[i] = img;
 			}
 			if (node.prev != null) {
@@ -955,9 +823,9 @@ zk.Tree = function(ops) {
 			var i = node.tier - 2;
 			while (n != root && i >= 0) {
 				if (n.next != null) {
-					zk.setCss(node.lineIcon[i], !tree.showline
-									? 'zk_tree_icon_blank'
-									: 'zk_tree_icon_line');
+					kzg.setCss(node.lineIcon[i], !tree.showline
+						? 'zk_tree_icon_blank'
+						: 'zk_tree_icon_line');
 					// node.lineIcon[i].src=tree.icons["line"].src;
 				}
 				n = n.parent;
@@ -970,13 +838,13 @@ zk.Tree = function(ops) {
 			if (ma.exIcon == null) {
 				// note:the real expand icon is set when add child
 				ma.exIcon = new Image();
-				ma.exIcon.src = zk.Tree.S;
+				ma.exIcon.src = kzg.Tree.S;
 				ma.exIcon.align = "absmiddle";
-				zk.on(ma.exIcon, 'click', function() {
-							ma.expand();
-						});
+				kzg.on(ma.exIcon, 'click', function () {
+					ma.expand();
+				});
 				var o = ma.icon.src == "" ? ma.label : ma.icon;
-				zk.inade(o, "beforeBegin", ma.exIcon);
+				kzg.inade(o, "beforeBegin", ma.exIcon);
 			}
 
 			// Joker:
@@ -985,7 +853,7 @@ zk.Tree = function(ops) {
 		node.expanded = true;
 		// set the left margin
 		if (!isExpandable(node)) {
-			node.icon.style.marginLeft = zk.Tree.SI.width;
+			node.icon.style.marginLeft = kzg.Tree.SI.width;
 		}
 		node.expanded = true;
 		node.setExpandStyle();
@@ -1003,15 +871,32 @@ zk.Tree = function(ops) {
 	this.addNode = addNode;
 
 	// remove
-	var remove = function(srcNode) {
-		zk.remove(srcNode.container);
-		nodes.removeo(srcNode);
+
+	// remove the element in the array
+	function removeo(arr, obj) {
+		var bl;
+
+		bl = false;
+		for (var i = 0; i < arr.length; i++) {
+			if (obj === arr[i] || bl) {
+				arr[i] = arr[i + 1];
+				bl = true;
+			}
+		}
+		if (bl) {
+			arr.length--;
+		}
+	}
+
+	var remove = function (srcNode) {
+		kzg.remove(srcNode.container);
+		removeo(nodes, srcNode);
 	}
 
 	/**
 	 * remove all the nodes of the tree
 	 */
-	this.removeAll = function() {
+	this.removeAll = function () {
 		var count;
 		var nds;
 
@@ -1031,7 +916,7 @@ zk.Tree = function(ops) {
 	 * @param argIsRecursion
 	 *            is this is the recurse invoke,need this to enhance performance
 	 */
-	this.removeNode = function(srcNode, argIsRecursion) {
+	this.removeNode = function (srcNode, argIsRecursion) {
 		if (!srcNode) {
 			return;
 		}// end if
@@ -1050,7 +935,7 @@ zk.Tree = function(ops) {
 					// I change to remove the icon
 					// document.createElement("div").insertAdjacentElement("afterBegin",ma.exIcon);
 					if (ma.expandStyle != "always") {
-						zk.remove(ma.exIcon);
+						kzg.remove(ma.exIcon);
 					} else {
 						ma.expanded = false;
 					}
@@ -1082,7 +967,7 @@ zk.Tree = function(ops) {
 
 			// do not forget to remove the obj from the children
 			if (ma != root) {
-				ma.children.removeo(srcNode);
+				removeo(ma.children, srcNode);
 				if (ma.children.length < 1) {
 					ma.hasChild = false;
 				}
@@ -1108,7 +993,7 @@ zk.Tree = function(ops) {
 	 * @param argKeydex
 	 *            the keydex of the node
 	 */
-	var locate = function(argKeydex) {
+	var locate = function (argKeydex) {
 		var strsKeydexs;
 		var index;
 		var tNode;
@@ -1138,7 +1023,7 @@ zk.Tree = function(ops) {
 	 * 
 	 * @param argNode
 	 */
-	this.getNodeKeydex = function(argNode) {
+	this.getNodeKeydex = function (argNode) {
 		var strKeydex;
 		var pNode;
 
@@ -1154,11 +1039,11 @@ zk.Tree = function(ops) {
 	}
 
 	// getChildrenCount
-	root.getChildrenCount = function() {
+	root.getChildrenCount = function () {
 		return root.children != null ? root.children.length : 0;
 	}
 
-	this.getNodesByTier = function(num) {
+	this.getNodesByTier = function (num) {
 		var col = [];
 		for (var i = 0; i < count; i++) {
 			if (nodes[i].getTier() == num) {
@@ -1171,7 +1056,7 @@ zk.Tree = function(ops) {
 	/**
 	 * the param is the same as the expand
 	 */
-	this.expandAll = function(isShow, argIncsub) {
+	this.expandAll = function (isShow, argIncsub) {
 		isShow = isShow == null ? !root.expanded : isShow;
 		for (var i = 0; i < count; i++) {
 			nodes[i].expand(isShow, argIncsub);
@@ -1185,7 +1070,7 @@ zk.Tree = function(ops) {
 	 * @param argIsneedCollapse
 	 *            is need collapse all first [for optimize]
 	 */
-	this.expandToTier = function(num) {
+	this.expandToTier = function (num) {
 		// collapse all first
 
 		for (var i = 0; i < count; i++) {
@@ -1199,18 +1084,18 @@ zk.Tree = function(ops) {
 			}
 		}
 	};
-	this.body = zk.cr("div")
+	this.body = kzg.cr("div")
 
-	this.count = function() {
+	this.count = function () {
 		return count;
 	}
 	this.root = root;
 	this.nodes = nodes;
 
-	zk.inade(ops.to, 'afterBegin', tree.body);
+	kzg.inade(ops.to, 'afterBegin', tree.body);
 }
 
-zk.Tree.NORMAL = 0;
-zk.Tree.CHECKBOX = 1;
-zk.Tree.RADIOBOX = 2;
+kzg.Tree.NORMAL = 0;
+kzg.Tree.CHECKBOX = 1;
+kzg.Tree.RADIOBOX = 2;
 

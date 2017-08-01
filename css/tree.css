@@ -1,74 +1,74 @@
-.zk_tree_icon_expand {
+.k_tree_icon_expand {
 	background-image: url("../images/p.gif");
 }
 
-.zk_tree_icon_collapse {
+.k_tree_icon_collapse {
 	background-image: url("../images/m.gif");
 }
 
-.zk_tree_icon_expand_top {
+.k_tree_icon_expand_top {
 	background-image: url("../images/Fp.gif");
 }
 
-.zk_tree_icon_expand_mid {
+.k_tree_icon_expand_mid {
 	background-image: url("../images/Tp.gif");
 }
 
-.zk_tree_icon_expand_end {
+.k_tree_icon_expand_end {
 	background-image: url("../images/Lp.gif");
 }
 
-.zk_tree_icon_collapse_top {
+.k_tree_icon_collapse_top {
 	background-image: url("../images/Fm.gif");
 }
 
-.zk_tree_icon_collapse_mid {
+.k_tree_icon_collapse_mid {
 	background-image: url("../images/Tm.gif");
 }
 
-.zk_tree_icon_collapse_end {
+.k_tree_icon_collapse_end {
 	background-image: url("../images/Lm.gif");
 }
 
-.zk_tree_icon_leaf {
+.k_tree_icon_leaf {
 	background-image: url("../images/T.gif");
 }
 
-.zk_tree_icon_leaf_top {
+.k_tree_icon_leaf_top {
 	background-image: url("../images/F.gif");
 }
 
-.zk_tree_icon_twig {
+.k_tree_icon_twig {
 	background-image: url("../images/L.gif");
 }
 
-.zk_tree_icon_line {
+.k_tree_icon_line {
 	background-image: url("../images/I.gif");
 }
 
-.zk_tree_icon_blank {
+.k_tree_icon_blank {
 	background-image: url("../images/b.gif");
 }
 
-.zk_tree_icon_default {	
+.k_tree_icon_default {	
 	background-image: url("../images/file.gif");
 	background-position: 2px 0px
 }
 
-.zk_tree_icon_folder {	
+.k_tree_icon_folder {	
 	background-image: url("../images/folder.gif");
 	background-position: 2px 0px
 }
 
-.zk_tree_icon_folderopen {	
+.k_tree_icon_folderopen {	
 	background-image: url("../images/folderopen.gif");
 	background-position: 2px 0px
 }
 
-.zk_tree_icon_collapse_noline{
+.k_tree_icon_collapse_noline{
 	background: url("../images/arrows.gif") no-repeat scroll -16px 0 transparent;
 }
 
-.zk_tree_icon_expand_noline{
+.k_tree_icon_expand_noline{
 	background: url("../images/arrows.gif") no-repeat scroll 0 0 transparent;
 }

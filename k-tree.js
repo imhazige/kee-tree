@@ -283,7 +283,7 @@ kzg.TreeNode = function (ops) {
 			icon.src = ops.icon;
 		} else {
 			icon.src = kzg.Tree.S;
-			kzg.setCss(icon, 'zk_tree_icon_default');
+			kzg.setCss(icon, 'k_tree_icon_default');
 		}
 	}
 
@@ -537,18 +537,18 @@ kzg.Tree = function (ops) {
 	var tree = this;
 
 	var defaultTheme = {
-		zk_tree_icon_blank: null,
-		zk_tree_icon_leaf_top: null,
-		zk_tree_icon_leaf: null,
-		zk_tree_icon_twig: null,
-		zk_tree_icon_collapse: null,
-		zk_tree_icon_expand: null,
-		zk_tree_icon_collapse_top: null,
-		zk_tree_icon_expand_top: null,
-		zk_tree_icon_collapse_mid: null,
-		zk_tree_icon_expand_mid: null,
-		zk_tree_icon_collapse_end: null,
-		zk_tree_icon_expand_end: null
+		k_tree_icon_blank: null,
+		k_tree_icon_leaf_top: null,
+		k_tree_icon_leaf: null,
+		k_tree_icon_twig: null,
+		k_tree_icon_collapse: null,
+		k_tree_icon_expand: null,
+		k_tree_icon_collapse_top: null,
+		k_tree_icon_expand_top: null,
+		k_tree_icon_collapse_mid: null,
+		k_tree_icon_expand_mid: null,
+		k_tree_icon_collapse_end: null,
+		k_tree_icon_expand_end: null
 	};
 
 	if (!kzg.Tree.SI) {
@@ -617,47 +617,47 @@ kzg.Tree = function (ops) {
 				// kzg.remove(srcNode.exIcon);
 				// return;
 				// }
-				strImgkey = 'zk_tree_icon_blank';
+				strImgkey = 'k_tree_icon_blank';
 			} else {
 				if (isFirstTop(srcNode)) {
 					// is first top,this is special
 					if (isTwig(srcNode)) {
 						// has no sister
 						if (srcNode.exIcon) {
-							strImgkey = 'zk_tree_icon_blank';
+							strImgkey = 'k_tree_icon_blank';
 						}
 					} else {
-						strImgkey = 'zk_tree_icon_leaf_top';
+						strImgkey = 'k_tree_icon_leaf_top';
 					}
 				} else if (isLeaf(srcNode)) {
-					strImgkey = 'zk_tree_icon_leaf';
+					strImgkey = 'k_tree_icon_leaf';
 				} else {
-					strImgkey = 'zk_tree_icon_twig';
+					strImgkey = 'k_tree_icon_twig';
 				}
 			}
 		} else {
 			// need show expand
 			if (!tree.showline) {
-				strImgkey = expanded ? 'zk_tree_icon_collapse_noline' : 'zk_tree_icon_expand_noline';
+				strImgkey = expanded ? 'k_tree_icon_collapse_noline' : 'k_tree_icon_expand_noline';
 			} else {
 				if (isFirstTop(srcNode)) {
 					if (isTwig(srcNode)) {
 						strImgkey = expanded
-							? "zk_tree_icon_collapse"
-							: "zk_tree_icon_expand";
+							? "k_tree_icon_collapse"
+							: "k_tree_icon_expand";
 					} else {
 						strImgkey = expanded
-							? "zk_tree_icon_collapse_top"
-							: "zk_tree_icon_expand_top";
+							? "k_tree_icon_collapse_top"
+							: "k_tree_icon_expand_top";
 					}
 				} else if (isLeaf(srcNode)) {
 					strImgkey = expanded
-						? "zk_tree_icon_collapse_mid"
-						: "zk_tree_icon_expand_mid";
+						? "k_tree_icon_collapse_mid"
+						: "k_tree_icon_expand_mid";
 				} else {
 					strImgkey = expanded
-						? "zk_tree_icon_collapse_end"
-						: "zk_tree_icon_expand_end";
+						? "k_tree_icon_collapse_end"
+						: "k_tree_icon_expand_end";
 				}
 			}
 		}
@@ -690,8 +690,8 @@ kzg.Tree = function (ops) {
 		if (srcNode.hasChild) {
 			for (var i = 0; i < srcNode.children.length; i++) {
 				kzg.setCss(srcNode.children[i].lineIcon[idx], !tree.showline
-					? 'zk_tree_icon_blank'
-					: 'zk_tree_icon_line');
+					? 'k_tree_icon_blank'
+					: 'k_tree_icon_line');
 				setLine(srcNode.children[i], idx);
 			}
 		}
@@ -773,8 +773,8 @@ kzg.Tree = function (ops) {
 			while (n != root && i >= 0) {
 				if (n.next != null) {
 					kzg.setCss(node.lineIcon[i], !tree.showline
-						? 'zk_tree_icon_blank'
-						: 'zk_tree_icon_line');
+						? 'k_tree_icon_blank'
+						: 'k_tree_icon_line');
 					// node.lineIcon[i].src=tree.icons["line"].src;
 				}
 				n = n.parent;
@@ -1047,4 +1047,4 @@ kzg.Tree = function (ops) {
 kzg.Tree.NORMAL = 0;
 kzg.Tree.CHECKBOX = 1;
 kzg.Tree.RADIOBOX = 2;
-
+kzg.Tree.S = 'data:image/gif;base64,R0lGODlhEwAUAPcAAAAAAIAAAACAAICAAAAAgIAAgACAgMDAwMDcwKbK8EAgAGAgAIAgAKAgAMAgAOAgAABAACBAAEBAAGBAAIBAAKBAAMBAAOBAAABgACBgAEBgAGBgAIBgAKBgAMBgAOBgAACAACCAAECAAGCAAICAAKCAAMCAAOCAAACgACCgAECgAGCgAICgAKCgAMCgAOCgAADAACDAAEDAAGDAAIDAAKDAAMDAAODAAADgACDgAEDgAGDgAIDgAKDgAMDgAODgAAAAQCAAQEAAQGAAQIAAQKAAQMAAQOAAQAAgQCAgQEAgQGAgQIAgQKAgQMAgQOAgQABAQCBAQEBAQGBAQIBAQKBAQMBAQOBAQABgQCBgQEBgQGBgQIBgQKBgQMBgQOBgQACAQCCAQECAQGCAQICAQKCAQMCAQOCAQACgQCCgQECgQGCgQICgQKCgQMCgQOCgQADAQCDAQEDAQGDAQIDAQKDAQMDAQODAQADgQCDgQEDgQGDgQIDgQKDgQMDgQODgQAAAgCAAgEAAgGAAgIAAgKAAgMAAgOAAgAAggCAggEAggGAggIAggKAggMAggOAggABAgCBAgEBAgGBAgIBAgKBAgMBAgOBAgABggCBggEBggGBggIBggKBggMBggOBggACAgCCAgECAgGCAgICAgKCAgMCAgOCAgACggCCggECggGCggICggKCggMCggOCggADAgCDAgEDAgGDAgIDAgKDAgMDAgODAgADggCDggEDggGDggIDggKDggMDggODggAAAwCAAwEAAwGAAwIAAwKAAwMAAwOAAwAAgwCAgwEAgwGAgwIAgwKAgwMAgwOAgwABAwCBAwEBAwGBAwIBAwKBAwMBAwOBAwABgwCBgwEBgwGBgwIBgwKBgwMBgwOBgwACAwCCAwECAwGCAwICAwKCAwMCAwOCAwACgwCCgwECgwGCgwICgwKCgwMCgwOCgwADAwCDAwEDAwGDAwIDAwKDAwP/78KCgpICAgP8AAAD/AP//AAAA//8A/wD//////yH5BAEAAP0ALAAAAAATABQAQAgiAPsJHEiwoMGDCBMqXMiwocOHECNKnEixosWLGDNq3CgwIAA7';

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-	<title>Tree</title>
+	<title>K-Tree</title>
 
 	<meta http-equiv="keywords" content="keyword1,keyword2,keyword3">
 	<meta http-equiv="description" content="tree with two style(show line, no line), checkbox node, radiobox node, contextmenu event">
@@ -11,19 +11,19 @@
 	<meta name="keyword" content="tree,checkbox,radiobox,contextmenu,select,lazyload">
 
 
-	<link rel="stylesheet" type="text/css" href="example/demo.css">
-	<link rel="stylesheet" type="text/css" href="css/tree.css">
+	<link rel="stylesheet" type="text/css" href="demo.css">
+	<link rel="stylesheet" type="text/css" href="../css/tree.css">
 
-	<script type="text/javascript" src="k-tree.js"></script>
+	<script type="text/javascript" src="../k-tree.js"></script>
 	<script type="text/javascript">
 		var prefun = test_addNode;
 		function zklog(msg) {
-			txtconsole = kzg.get("logs");
+			txtconsole = document.getElementById("logs");
 			txtconsole.value += msg + '\n';
 		}
 
 		function initTree(showline) {
-			var cont = kzg.get("cont");
+			var cont = document.getElementById("cont");
 			cont.innerHTML = '';
 
 			window.tree = new kzg.Tree({ showline: showline, to: cont });
@@ -186,9 +186,9 @@
 				window.win.close();
 			}
 			if (type) {
-				window.win = window.open("pt.html?t=1&n=" + kzg.get("pn").value);
+				window.win = window.open("pt.html?t=1&n=" + document.getElementById("pn").value);
 			} else {
-				window.win = window.open("pt.html?t=0&n=" + kzg.get("pn").value);
+				window.win = window.open("pt.html?t=0&n=" + document.getElementById("pn").value);
 			}
 		}
 	</script>

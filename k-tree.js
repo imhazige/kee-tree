@@ -294,7 +294,7 @@ kzg.TreeNode = function (ops) {
 	icon.tabIndex = node.label.tabIndex = 1;
 	icon.hideFocus = true;
 
-	// Joker:all add param node
+	// all add param node
 	node.select = function () {
 		if (!node.isEnable()) {
 			return;
@@ -380,7 +380,7 @@ kzg.TreeNode = function (ops) {
 	 *            thing
 	 */
 	node.expand = function (isShow, incSub) {
-		// Joker:
+		// 
 		// if(node.children.length==0)return;
 		if (node.children.length == 0 && node.expandStyle != "always")
 			return;
@@ -401,7 +401,7 @@ kzg.TreeNode = function (ops) {
 		}
 		tree.setExIcon(node);
 
-		// Joker:add node Eventarg to node.onexpand
+		// add node Eventarg to node.onexpand
 		if (node.expanded) {
 			kzg.fire(node, 'expand');
 		} else {
@@ -457,7 +457,7 @@ kzg.TreeNode = function (ops) {
 
 		}
 
-		// Joker:care this check
+		// care this check
 		// is necessary or it will cause infinitude recursion
 		if (node.checkBox.checked != _argChecked) {
 			node.checked = node.checkBox.checked = _argChecked;
@@ -781,7 +781,7 @@ kzg.Tree = function (ops) {
 				i--;
 			}
 		}
-		// Joker:add expand image with the style judgement
+		// add expand image with the style judgement
 		var ma = node.parent;
 		if (ma != root) {
 			if (ma.exIcon == null) {
@@ -796,7 +796,7 @@ kzg.Tree = function (ops) {
 				kzg.inade(o, "beforeBegin", ma.exIcon);
 			}
 
-			// Joker:
+			// 
 			tree.setExIcon(ma);
 		}
 		node.expanded = true;

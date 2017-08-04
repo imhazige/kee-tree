@@ -9,7 +9,7 @@
 
 	<meta content="Ka Zhou" name=author>
 	<meta name="keyword" content="tree,checkbox,radiobox,contextmenu,select,lazyload">
-	<title> Getting started &middot; k-Tree </title>
+	<title> Getting started &middot; kee-Tree </title>
 	<link href=http://getbootstrap.com/dist/css/bootstrap.min.css rel=stylesheet>
 	<link href=http://getbootstrap.com/assets/css/docs.min.css rel=stylesheet>
 	<!--[if lt IE 9]><script src=http://getbootstrap.com/assets/js/ie8-responsive-file-warning.js></script><![endif]-->
@@ -18,9 +18,10 @@
 	<!-- <link href=/favicon.ico rel=icon> -->
 
 	<link rel="stylesheet" type="text/css" href="example/demo.css">
-	<link rel="stylesheet" type="text/css" href="css/tree.css">
+	<link rel="stylesheet" type="text/css" href="css/kee-tree.css">
 
-	<script type="text/javascript" src="k-tree.js"></script>
+	<script type="text/javascript" src="kee-tree.js"></script>
+	<script type="text/javascript" src=https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js></script>
 </head>
 
 <body>
@@ -34,16 +35,78 @@
 					<h1 class=page-header id=download>Download</h1>
 					<div class="row bs-downloads">
 						<div class=col-sm-4>
-							<h3 id=download-bootstrap>k-Tree</h3>
+							<h3 id=download-ktree>kee-Tree</h3>
 							<p>Compiled and minified CSS, JavaScript and original source files are included.</p>
-							<p> <a href=https://github.com/twbs/bootstrap/releases/download/v3.3.7/bootstrap-3.3.7-dist.zip class="btn btn-lg btn-outline">Download k-Tree</a>								</p>
+							<p> <a href=https://github.com/twbs/bootstrap/releases/download/v3.3.7/bootstrap-3.3.7-dist.zip class="btn btn-lg btn-outline">Download kee-Tree</a>								</p>
 						</div>
 					</div>
-					<h2 id=download-cdn>Bootstrap CDN</h2>
-					<p>The folks over at <a href=https://www.maxcdn.com/>MaxCDN</a> graciously provide CDN support for Bootstrap's CSS and
-						JavaScript. Just use these <a href=https://www.bootstrapcdn.com/>Bootstrap CDN</a> links.</p>
+					<h2 id=download-setup>Setup in the code</h2>
+					<p>
+						Assumeing you have extract the dowloaded file under the current folder. First step to include the resource in the html code.
+					</p>
 					<figure class=highlight>
-						<pre><code class=language-html data-lang=html>
+						<pre>
+							<code class=language-html data-lang=html>
+&lt;link rel=&quot;stylesheet&quot; type=&quot;text/css&quot; href=&quot;css/tree.css&quot;&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;k-tree.js&quot;&gt;&lt;/script&gt;
+							</code></pre>
+					</figure>
+				</div>
+			</div>
+			<div class=col-md-9 role=main>
+				<div class=bs-docs-section>
+					<h1 class=page-header id=example>Getting started</h1>
+					<p class="lead">
+						Though kee-Tree do not depend on any other framework, but to run this example, we need depend on jquery. You can use any other
+						framework or not, anyway, kee-Tree is able to work without any other framework. Let's get started with some example.
+					</p>
+					<h2 id=example-basic-usage>Basic usage</h2>
+					<p>
+						Create a simple tree have two depth of children
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-usage></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-usage");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon:'http://nonexists.png' ,iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							//create 2nd level children under the node demos	
+							for (var i = 0; i < 10; i++) {
+								var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+								tree.addNode(gNode, node);
+							}
+						</script>
+
+					</div>
+					<figure class=highlight>
+						<pre>
+							<code class=language-javascript data-lang=javascript>
+//where the tree will placed
+var cont = document.getElementById(&quot;sc-example-basic-usage&quot;);
+
+//create a tree, to: is the element to place the tree in
+var tree = new kzg.Tree({ to: cont });
+//create a top level of node
+//tree: the tree object 
+//text: the text will show on the node
+//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+var gNode = new kzg.TreeNode({ tree: tree, text: &quot;demos&quot;, icon:'http://nonexists.png' ,iconCls: 'demoicon' });
+tree.addNode(tree.root, gNode);
+
+//create 2nd level children under the node demos	
+for (var i = 0; i &lt; 10; i++) {
+	var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+	tree.addNode(gNode, node);
+}
 							</code></pre>
 					</figure>
 				</div>
@@ -67,17 +130,13 @@
 			<ul class=bs-docs-footer-links>
 				<li><a href=https://github.com/imhazige/k-tree>GitHub</a></li>
 			</ul>
-			<p>k-Tree Code licensed <a href=https://github.com/imhazige/k-tree/blob/master/LICENSE target=_blank rel=license>MIT</a>,
+			<p>kee-Tree Code licensed <a href=https://github.com/imhazige/k-tree/blob/master/LICENSE target=_blank rel=license>MIT</a>,
 				docs
 				<a href=https://creativecommons.org/licenses/by/3.0/ target=_blank rel=license>CC BY 3.0</a>.</p>
 			<p>This Doc is powered by <a href=https://github.com/twbs/bootstrap>Bootstrap</a>.</p>
 
 		</div>
 	</footer>
-	<script src=https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js></script>
-	<script>
-		window.jQuery || document.write('<script src="http://getbootstrap.com/assets/js/vendor/jquery.min.js"><\/script>')
-	</script>
 	<script src=http://getbootstrap.com/dist/js/bootstrap.min.js></script>
 	<script src=http://getbootstrap.com/assets/js/docs.min.js></script>
 	<script src=http://getbootstrap.com/assets/js/ie10-viewport-bug-workaround.js></script>

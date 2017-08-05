@@ -186,7 +186,7 @@ var tree = new kzg.Tree({ to: cont , showline:true});
 					</div>
 					<figure class=highlight>
 						<pre>
-							<code class=language-html data-lang=html>
+							<code class=language-javascript data-lang=javascript>
 var ln = new kzg.TreeNode({ tree: tree, text: "expand me to load...", expandStyle: "always" });
 
 //the kzg.oe function take 3 arguments.
@@ -220,20 +220,59 @@ kzg.oe(ln, 'expand', callback);
 tree.addNode(gNode, ln);							
 							</code></pre>
 					</figure>
-					
+
 					<h2 id=example-basic-event-other>Events select,conextmenu</h2>
 					<p>
-						Assumeing you have extract the dowloaded file under the current folder. First step to include the resource in the html code.
+						'select' event will trigger when a node being selected. kee-Tree also support contextmenu event.
 					</p>
 					<div class="bs-example">
-					<div id=></div>
+						<div id=sc-example-basic-event-other></div>
 						<script type="text/javascript">
-							
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-event-other");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							//select event will trigger
+							kzg.oe(tree, 'select', function () {
+								alert('tree.selectedNode:' + tree.selectedNode.caption);
+							});
+
+							//context menu event
+							tree.oncontextmenu = function (e, node) {
+								alert('context menu on node ' + node.caption);
+
+								return false;
+							};
+
+							//create 2nd level children under the node demos	
+							for (var i = 0; i < 10; i++) {
+								var node = new kzg.TreeNode({ tree: tree, text: 'node ' + i });
+								tree.addNode(gNode, node);
+							}
 						</script>
 					</div>
 					<figure class=highlight>
 						<pre>
-							<code class=language-html data-lang=html>
+							<code class=language-javascript data-lang=javascript>
+//select event will trigger
+kzg.oe(tree, 'select', function () {
+	alert('tree.selectedNode:' + tree.selectedNode.caption);
+});
+
+//context menu event
+tree.oncontextmenu = function (e, node) {
+	alert('context menu on node ' + node.caption);
+
+	return false;
+};								
 							</code></pre>
 					</figure>
 
@@ -247,6 +286,7 @@ tree.addNode(gNode, ln);
 							<ul class=nav>
 								<li><a href=#example-basic-usage>Basic usage</a></li>
 								<li><a href=#example-basic-event>Events Collapse/Expand</a></li>
+								<li><a href=#example-basic-event-other>Events Select, Context Menu</a></li>
 							</ul>
 						</li>
 					</ul> <a href=#top class=back-to-top> Back to top </a> </nav>

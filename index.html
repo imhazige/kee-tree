@@ -52,13 +52,11 @@
 							</code></pre>
 					</figure>
 				</div>
-			</div>
-			<div class=col-md-9 role=main>
 				<div class=bs-docs-section>
 					<h1 class=page-header id=example>Getting started</h1>
 					<p class="lead">
-						Though kee-Tree do not depend on any other framework, but to run this example, we need depend on jquery. You can use any other
-						framework or not, anyway, kee-Tree is able to work without any other framework. Let's get started with some example.
+						Though kee-Tree do not depend on any other framework, but to run this example, we need depend on jquery. You can use any
+						other framework or not, anyway, kee-Tree is able to work without any other framework. Let's get started with some example.
 					</p>
 					<h2 id=example-basic-usage>Basic usage</h2>
 					<p>
@@ -76,7 +74,7 @@
 							//tree: the tree object 
 							//text: the text will show on the node
 							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
-							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon:'http://nonexists.png' ,iconCls: 'demoicon' });
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
 							tree.addNode(tree.root, gNode);
 
 							//create 2nd level children under the node demos	
@@ -109,16 +107,146 @@ for (var i = 0; i &lt; 10; i++) {
 }
 							</code></pre>
 					</figure>
+					<div class="bs-example">
+						<div id=sc-example-basic-usage-2></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-usage-2");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont, showline: true });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							//create 2nd level children under the node demos	
+							for (var i = 0; i < 10; i++) {
+								var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+								tree.addNode(gNode, node);
+							}
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+							<code class=language-javascript data-lang=javascript>
+//showline: another style of tree, default is false								
+var tree = new kzg.Tree({ to: cont , showline:true});
+							</code></pre>
+					</figure>
+
+					<h2 id=example-basic-event>Events Collapse/Expand</h2>
+					<p>
+						kee-Tree will trigger collapse/expand event when a node collapses/expands.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-event></div>
+						<script type="text/javascript">
+							var cont = document.getElementById('sc-example-basic-event');
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							var ln = new kzg.TreeNode({ tree: tree, text: "expand me to load...", expandStyle: "always" });
+
+							//the kzg.oe function take 3 arguments.
+							//it will register callback to a specified object
+							//1: the object will broadcast the event
+							//2: the event type
+							//3: the callback
+
+							//a 'collapse' event will trigger when the node collapsed
+							kzg.oe(ln, 'collapse', function (e) {
+								//the argument of the call back have a peoperty src
+								//which is the first argument of the oe function
+								//clear the children
+								e.src.removeChildren();
+								e.src.setCaption("expand me to load...");
+							});
+							var callback = function (e) {
+								var node = e.src;
+								node.setCaption("loading.....");
+								var inv = window.setInterval(function () {
+									tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-1" }));
+									tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-2" }));
+									node.setCaption("done");
+									window.clearInterval(inv);
+								}, 2000);
+							};
+							//a 'expand' event will trigger when the node expand
+							kzg.oe(ln, 'expand', callback);
+							//you can use kzg.ue(ln, 'expand', callback) to unregister the callback
+
+							tree.addNode(gNode, ln);
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+							<code class=language-html data-lang=html>
+var ln = new kzg.TreeNode({ tree: tree, text: "expand me to load...", expandStyle: "always" });
+
+//the kzg.oe function take 3 arguments.
+//it will register callback to a specified object
+//1: the object will broadcast the event
+//2: the event type
+//3: the callback
+
+//a 'collapse' event will trigger when the node collapsed
+kzg.oe(ln, 'collapse', function (e) {
+	//the argument of the call back have a peoperty src
+	//which is the first argument of the oe function
+	//clear the children
+	e.src.removeChildren();
+	e.src.setCaption("expand me to load...");
+});
+var callback = function (e) {
+	var node = e.src;
+	node.setCaption("loading.....");
+	var inv = window.setInterval(function () {
+		tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-1" }));
+		tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-2" }));
+		node.setCaption("done");
+		window.clearInterval(inv);
+	}, 2000);
+};
+//a 'expand' event will trigger when the node expand
+kzg.oe(ln, 'expand', callback);
+//you can use kzg.ue(ln, 'expand', callback) to unregister the callback
+
+tree.addNode(gNode, ln);							
+							</code></pre>
+					</figure>
+					
+					<h2 id=example-basic-event-other>Events select,conextmenu</h2>
+					<p>
+						Assumeing you have extract the dowloaded file under the current folder. First step to include the resource in the html code.
+					</p>
+					<div class="bs-example">
+					<div id=></div>
+						<script type="text/javascript">
+							
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+							<code class=language-html data-lang=html>
+							</code></pre>
+					</figure>
+
 				</div>
 			</div>
 			<div class=col-md-3 role=complementary>
 				<nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs">
 					<ul class="nav bs-docs-sidenav">
 						<li> <a href=#download>Download</a> </li>
-						<li> <a href=#whats-included>What's included</a>
+						<li> <a href=#example>Getting started</a>
 							<ul class=nav>
-								<li><a href=#whats-included-precompiled>Precompiled</a></li>
-								<li><a href=#whats-included-source>Source code</a></li>
+								<li><a href=#example-basic-usage>Basic usage</a></li>
+								<li><a href=#example-basic-event>Events Collapse/Expand</a></li>
 							</ul>
 						</li>
 					</ul> <a href=#top class=back-to-top> Back to top </a> </nav>

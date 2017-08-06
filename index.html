@@ -278,6 +278,156 @@ tree.oncontextmenu = function (e, node) {
 							</code></pre>
 					</figure>
 
+					<h2 id=example-basic-checkbox>CheckBox Node</h2>
+					<p>
+						Add checkbox node is easy.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic--checkbox></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic--checkbox");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							for (var i = 0; i < 5; i++) {
+								//the type argument set to checkbox
+								var node = new kzg.TreeNode({ tree: tree, text: "checkbox" + i, type: kzg.Tree.CHECKBOX });
+								tree.addNode(gNode, node);
+								//note: this method can't be called before this node is added to the tree
+								node.setChecked(true);
+								//set the label style
+								jQuery(node.label).css('margin-left', '5px');
+								//the click event will trigger when checkbox button clicked
+								kzg.oe(node, 'click', function (e, data) {
+									var node = e.src;
+									//the checked property of the node show the status of the checkbox
+									alert('node ' + node.caption + ' is ' + (!node.checked ? 'unchecked' : 'checked'));
+								});
+							}
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+        <code class=language-javascript data-lang=javascript>
+//the type argument set to checkbox
+var node = new kzg.TreeNode({ tree: tree, text: "checkbox" + i, type: kzg.Tree.CHECKBOX });
+tree.addNode(gNode, node);
+//note: this method can't be called before this node is added to the tree
+node.setChecked(true);
+//set the label style
+jQuery(node.label).css('margin-left','5px');
+//the click event will trigger when checkbox button clicked
+kzg.oe(node, 'click', function (e, data) {
+	var node = e.src;
+	//the checked property of the node show the status of the checkbox
+	alert('node ' + node.caption + ' is ' + (!node.checked ? 'unchecked' : 'checked'));
+});			
+        </code></pre>
+					</figure>
+
+					<h2 id=example-basic-radiobox>RadioBox Node</h2>
+					<p>
+						Radiobox can be add with type specified to kzg.Tree.RADIOBOX.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-radiobox></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-radiobox");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							for (var i = 0; i < 5; i++) {
+								//the type argument set to checkbox
+								var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
+								tree.addNode(gNode, node);
+								//note: this method can't be called before this node is added to the tree
+								node.setRadioCheck();
+								//set the label style
+								jQuery(node.label).css('margin-left', '5px');
+							}
+							//the rdocheckchanged event will trigger when radio check value changed in a radio group
+							//the radio nodes under the same node will have the same name
+							kzg.oe(gNode, 'rdocheckchanged', function (e, data) {
+								alert('radio select changed from ' + data.preNode.caption + ' to ' + data.curNode.caption);
+							});
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+        <code class=language-javascript data-lang=javascript>
+for (var i = 0; i < 5; i++) {
+	//the type argument set to checkbox
+	var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
+	tree.addNode(gNode, node);
+	//note: this method can't be called before this node is added to the tree
+	node.setRadioCheck();
+	//set the label style
+	jQuery(node.label).css('margin-left','5px');
+}
+//the rdocheckchanged event will trigger when radio check value changed in a radio group
+//the radio nodes under the same node will have the same name
+kzg.oe(gNode, 'rdocheckchanged', function (e, data) {
+	alert('radio select changed from ' + data.preNode.caption + ' to ' + data.curNode.caption);
+});
+        </code></pre>
+					</figure>
+
+					<p>
+						You can access the radio dom element directly, specify its name, checked/unchecked.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-radiobox-2></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-radiobox-2");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							for (var i = 0; i < 5; i++) {
+								//the type argument set to checkbox
+								var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
+								tree.addNode(gNode, node);
+								//after add to the tree, you can access the radiobox directly via node.rdoBox
+								node.rdoBox.name = 'node-name-' + i;
+								//set it checked
+								node.rdoBox.checked = true;
+								//set the label style
+								jQuery(node.label).css('margin-left', '5px');
+							}
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+        <code class=language-javascript data-lang=javascript>
+//after add to the tree, you can access the radiobox directly via node.rdoBox
+node.rdoBox.name = 'node-name-' + i;
+//set it checked
+node.rdoBox.checked = true;
+        </code></pre>
+					</figure>
 				</div>
 			</div>
 			<div class=col-md-3 role=complementary>
@@ -289,6 +439,8 @@ tree.oncontextmenu = function (e, node) {
 								<li><a href=#example-basic-usage>Basic usage</a></li>
 								<li><a href=#example-basic-event>Events Collapse/Expand</a></li>
 								<li><a href=#example-basic-event-other>Events Select, Context Menu</a></li>
+								<li><a href=#example-basic-checkbox>CheckBox Node</a></li>
+								<li><a href=#example-basic-radiobox>RadioBox Node</a></li>
 							</ul>
 						</li>
 					</ul> <a href=#top class=back-to-top> Back to top </a> </nav>

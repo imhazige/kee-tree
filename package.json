@@ -1,0 +1,33 @@
+{
+  "name": "kee-tree",
+  "version": "1.0.0",
+  "description": "Javascript Tree",
+  "author": "Ka Zhou",
+  "homepage": "https://github.com/imhazige/kee-tree",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/imhazige/kee-tree.git"
+  },
+  "keywords": [
+    "tree",
+    "checkbox",
+    "radiobox"
+  ],
+  "main": "./kee-tree.js",
+  "files": [
+    "kee-tree.js",
+    "kee-tree.min.js",
+    "index.html",
+    "css",
+    "images",
+    "example",
+    "LICENSE"
+  ],
+  "engines": {
+    "npm": ">=1.4.0"
+  },
+  "devDependencies": {
+
+  },
+  "license": "MIT"
+}

@@ -43,9 +43,16 @@
 						<div class=col-sm-4>
 							<h3 id=download-ktree>kee-Tree</h3>
 							<p>Compiled and minified CSS, JavaScript and original source files are included.</p>
-							<p> <a href=https://github.com/imhazige/kee-tree/archive/v1.0.0.zip class="btn btn-lg btn-outline">Download kee-Tree</a>								</p>
+							<p> <a href=https://github.com/imhazige/kee-tree/archive/v1.0.1.zip class="btn btn-lg btn-outline">Download kee-Tree</a>								</p>
 						</div>
 					</div>
+
+					<h2 id=download-setup-npm>Install via NPM</h2>
+					<p>
+						You can install via NPM 
+						"npm install kee-tree"
+					</p>
+
 					<h2 id=download-setup>Setup in the code</h2>
 					<p>
 						Assumeing you have extract the dowloaded file under the current folder. First step to include the resource in the html code.
@@ -360,7 +367,6 @@ tree.addNode(gNode, ln);
 
 								//select event will trigger
 								kzg.oe(tree, 'select', function () {
-									console.log(tree.selectedNode);
 									alert('tree.selectedNode:' + tree.selectedNode.caption);
 								});
 

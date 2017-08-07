@@ -84,6 +84,8 @@
 								var node = new kzg.TreeNode({ tree: tree, text: i + '' });
 								tree.addNode(gNode, node);
 							}
+							//you can access node's children by property children
+							gNode.children[0].setCaption('change node caption.');
 						</script>
 
 					</div>
@@ -107,8 +109,14 @@ for (var i = 0; i &lt; 10; i++) {
 	var node = new kzg.TreeNode({ tree: tree, text: i + '' });
 	tree.addNode(gNode, node);
 }
+//you can access node's children by property children
+gNode.children[0].setCaption('change node caption.');
 							</code></pre>
 					</figure>
+
+					<p>
+						Change to another style only with one config change.
+					</p>
 					<div class="bs-example">
 						<div id=sc-example-basic-usage-2></div>
 						<script type="text/javascript">
@@ -139,6 +147,99 @@ var tree = new kzg.Tree({ to: cont , showline:true});
 							</code></pre>
 					</figure>
 
+
+					<p>
+						Collapse/Expand node by code.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-usage-3></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-usage-3");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont, showline: true });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							//create 2nd level children under the node demos	
+							for (var i = 0; i < 10; i++) {
+								var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+								tree.addNode(gNode, node);
+							}
+
+							//collapse the node
+							//the first argument: true/false:expand/collapse 
+							//the second argument: true/false do/or not the same thing to its children  
+							gNode.expand(false, false);
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+        <code class=language-javascript data-lang=javascript>
+//collapse the node
+//the first argument: true/false:expand/collapse 
+//the second argument: true/false do/or not the same thing to its children  
+gNode.expand(false,false);			
+        </code></pre>
+					</figure>
+
+					<p>
+						Find node by key.
+					</p>
+					<div class="bs-example">
+						<div id=sc-example-basic-usage-4></div>
+						<script type="text/javascript">
+							//where the tree will placed
+							var cont = document.getElementById("sc-example-basic-usage-4");
+
+							//create a tree, to: is the element to place the tree in
+							var tree = new kzg.Tree({ to: cont  });
+							//create a top level of node
+							//tree: the tree object 
+							//text: the text will show on the node
+							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
+							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
+							tree.addNode(tree.root, gNode);
+
+							//create 2nd level children under the node demos	
+							for (var i = 0; i < 3; i++) {
+								var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+								tree.addNode(gNode, node);
+								for (var k = 0; k < 5; k++) {
+									//again. the key must be unique in the whole tree.
+									var cn = new kzg.TreeNode({ tree: tree, text: i + '--' + k, key: i + '--' + k});
+									tree.addNode(node, cn);
+								}
+							}
+
+							//make the node with key '2--3' selected.
+							tree.nodes["2--3"].select();
+						</script>
+					</div>
+					<figure class=highlight>
+						<pre>
+							<code class=language-javascript data-lang=javascript>
+//create 2nd level children under the node demos	
+for (var i = 0; i < 3; i++) {
+	var node = new kzg.TreeNode({ tree: tree, text: i + '' });
+	tree.addNode(gNode, node);
+	for (var k = 0; k < 5; k++) {
+		//again. the key must be unique in the whole tree.
+		var cn = new kzg.TreeNode({ tree: tree, text: i + '--' + k, key: i + '--' + k});
+		tree.addNode(node, cn);
+	}
+}
+
+//make the node with key '2--3' selected.
+tree.nodes["2--3"].select();								
+							</code></pre>
+					</figure>
+
 					<h2 id=example-basic-event>Events Collapse/Expand</h2>
 					<p>
 						kee-Tree will trigger collapse/expand event when a node collapses/expands.
@@ -146,44 +247,44 @@ var tree = new kzg.Tree({ to: cont , showline:true});
 					<div class="bs-example">
 						<div id=sc-example-basic-event></div>
 						<script type="text/javascript">
-							var cont = document.getElementById('sc-example-basic-event');
+								var cont = document.getElementById('sc-example-basic-event');
 
-							//create a tree, to: is the element to place the tree in
-							var tree = new kzg.Tree({ to: cont });
-							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", iconCls: 'demoicon' });
-							tree.addNode(tree.root, gNode);
+								//create a tree, to: is the element to place the tree in
+								var tree = new kzg.Tree({ to: cont });
+								var gNode = new kzg.TreeNode({ tree: tree, text: "demos", iconCls: 'demoicon' });
+								tree.addNode(tree.root, gNode);
 
-							var ln = new kzg.TreeNode({ tree: tree, text: "expand me to load...", expandStyle: "always" });
+								var ln = new kzg.TreeNode({ tree: tree, text: "expand me to load...", expandStyle: "always" });
 
-							//the kzg.oe function take 3 arguments.
-							//it will register callback to a specified object
-							//1: the object will broadcast the event
-							//2: the event type
-							//3: the callback
+								//the kzg.oe function take 3 arguments.
+								//it will register callback to a specified object
+								//1: the object will broadcast the event
+								//2: the event type
+								//3: the callback
 
-							//a 'collapse' event will trigger when the node collapsed
-							kzg.oe(ln, 'collapse', function (e) {
-								//the argument of the call back have a peoperty src
-								//which is the first argument of the oe function
-								//clear the children
-								e.src.removeChildren();
-								e.src.setCaption("expand me to load...");
-							});
-							var callback = function (e) {
-								var node = e.src;
-								node.setCaption("loading.....");
-								var inv = window.setInterval(function () {
-									tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-1" }));
-									tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-2" }));
-									node.setCaption("done");
-									window.clearInterval(inv);
-								}, 2000);
-							};
-							//a 'expand' event will trigger when the node expand
-							kzg.oe(ln, 'expand', callback);
-							//you can use kzg.ue(ln, 'expand', callback) to unregister the callback
+								//a 'collapse' event will trigger when the node collapsed
+								kzg.oe(ln, 'collapse', function (e) {
+									//the argument of the call back have a peoperty src
+									//which is the first argument of the oe function
+									//clear the children
+									e.src.removeChildren();
+									e.src.setCaption("expand me to load...");
+								});
+								var callback = function (e) {
+									var node = e.src;
+									node.setCaption("loading.....");
+									var inv = window.setInterval(function () {
+										tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-1" }));
+										tree.addNode(ln, new kzg.TreeNode({ tree: tree, text: "lazy-2" }));
+										node.setCaption("done");
+										window.clearInterval(inv);
+									}, 2000);
+								};
+								//a 'expand' event will trigger when the node expand
+								kzg.oe(ln, 'expand', callback);
+								//you can use kzg.ue(ln, 'expand', callback) to unregister the callback
 
-							tree.addNode(gNode, ln);
+								tree.addNode(gNode, ln);
 						</script>
 					</div>
 					<figure class=highlight>
@@ -301,8 +402,20 @@ tree.oncontextmenu = function (e, node) {
 								//the type argument set to checkbox
 								var node = new kzg.TreeNode({ tree: tree, text: "checkbox" + i, type: kzg.Tree.CHECKBOX });
 								tree.addNode(gNode, node);
+								for (var k = 0; k < 5; k++) {
+									//the type argument set to checkbox
+									var cn = new kzg.TreeNode({ tree: tree, text: "checkbox" + i + '-' + k, type: kzg.Tree.CHECKBOX });
+									tree.addNode(node, cn);
+									//set the label style
+									jQuery(cn.label).css('color', 'green');
+									jQuery(cn.label).css('margin-left', '5px');
+								}
+								//set it checked by code
+								//argument 1: true/false - checked/unchecked
+								//argument 2: true/false - its children checked/unchecked(default is false)
+								//argument 3: true/false - fire or not the click event(default is false)
 								//note: this method can't be called before this node is added to the tree
-								node.setChecked(true);
+								node.setChecked(true, true, false);
 								//set the label style
 								jQuery(node.label).css('margin-left', '5px');
 								//the click event will trigger when checkbox button clicked
@@ -310,6 +423,13 @@ tree.oncontextmenu = function (e, node) {
 									var node = e.src;
 									//the checked property of the node show the status of the checkbox
 									alert('node ' + node.caption + ' is ' + (!node.checked ? 'unchecked' : 'checked'));
+									node.children.forEach(function (nc) {
+										nc.setChecked(node.checked, true, false);
+									}, this);
+								});
+								//also you can access the checkbox dom element directly by checkbox peroperty
+								jQuery(node.checkBox).on('click', function (e) {
+									alert('checked -- ' + e.target.checked);
 								});
 							}
 						</script>
@@ -317,19 +437,37 @@ tree.oncontextmenu = function (e, node) {
 					<figure class=highlight>
 						<pre>
         <code class=language-javascript data-lang=javascript>
-//the type argument set to checkbox
-var node = new kzg.TreeNode({ tree: tree, text: "checkbox" + i, type: kzg.Tree.CHECKBOX });
-tree.addNode(gNode, node);
-//note: this method can't be called before this node is added to the tree
-node.setChecked(true);
-//set the label style
-jQuery(node.label).css('margin-left','5px');
-//the click event will trigger when checkbox button clicked
-kzg.oe(node, 'click', function (e, data) {
-	var node = e.src;
-	//the checked property of the node show the status of the checkbox
-	alert('node ' + node.caption + ' is ' + (!node.checked ? 'unchecked' : 'checked'));
-});			
+for (var i = 0; i < 5; i++) {
+	//the type argument set to checkbox
+	var node = new kzg.TreeNode({ tree: tree, text: "checkbox" + i, type: kzg.Tree.CHECKBOX });
+	tree.addNode(gNode, node);
+	for (var k = 0; k < 5; k++) {
+		//the type argument set to checkbox
+		var cn = new kzg.TreeNode({ tree: tree, text: "checkbox" + i + '-' + k, type: kzg.Tree.CHECKBOX });
+		tree.addNode(node, cn);
+	}
+	//set it checked by code
+	//argument 1: true/false - checked/unchecked
+	//argument 2: true/false - its children checked/unchecked(default is false)
+	//argument 3: true/false - fire or not the click event(default is false)
+	//note: this method can't be called before this node is added to the tree
+	node.setChecked(true,true,false);
+	//set the label style
+	jQuery(node.label).css('margin-left', '5px');
+	//the click event will trigger when checkbox button clicked
+	kzg.oe(node, 'click', function (e, data) {
+		var node = e.src;
+		//the checked property of the node show the status of the checkbox
+		alert('node ' + node.caption + ' is ' + (!node.checked ? 'unchecked' : 'checked'));
+		node.children.forEach(function(nc) {
+			nc.setChecked(node.checked,true,false);
+		}, this);
+	});
+	//also you can access the checkbox dom element directly by checkbox peroperty
+	jQuery(node.checkBox).on('click', function (e) {
+		alert('checked -- ' + e.target.checked);
+	});
+}	
         </code></pre>
 					</figure>
 
@@ -356,11 +494,18 @@ kzg.oe(node, 'click', function (e, data) {
 								//the type argument set to checkbox
 								var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
 								tree.addNode(gNode, node);
-								//note: this method can't be called before this node is added to the tree
-								node.setRadioCheck();
 								//set the label style
 								jQuery(node.label).css('margin-left', '5px');
 							}
+							//the radio node under the same node parent will have the same name, so they are a group.
+							var childNode2 = gNode.children[1];
+							//setRadioCheck of the node will make it checked
+							//note: this method can't be called before this node is added to the tree
+							childNode2.setRadioCheck();
+							//after add to the tree, you can access the radiobox directly via node.rdoBox
+							jQuery(childNode2.rdoBox).on('change', function (e) {
+								alert('checked -- ' + e.target.checked);
+							});
 							//the rdocheckchanged event will trigger when radio check value changed in a radio group
 							//the radio nodes under the same node will have the same name
 							kzg.oe(gNode, 'rdocheckchanged', function (e, data) {
@@ -375,11 +520,18 @@ for (var i = 0; i < 5; i++) {
 	//the type argument set to checkbox
 	var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
 	tree.addNode(gNode, node);
-	//note: this method can't be called before this node is added to the tree
-	node.setRadioCheck();
 	//set the label style
-	jQuery(node.label).css('margin-left','5px');
+	jQuery(node.label).css('margin-left', '5px');
 }
+//the radio node under the same node parent will have the same name, so they are a group.
+var childNode2 = gNode.children[1];
+//setRadioCheck of the node will make it checked
+//note: this method can't be called before this node is added to the tree
+childNode2.setRadioCheck();
+//after add to the tree, you can access the radiobox directly via node.rdoBox
+jQuery(childNode2.rdoBox).on('change',function(e){
+	alert('checked -- ' + e.target.checked);
+});
 //the rdocheckchanged event will trigger when radio check value changed in a radio group
 //the radio nodes under the same node will have the same name
 kzg.oe(gNode, 'rdocheckchanged', function (e, data) {
@@ -388,47 +540,9 @@ kzg.oe(gNode, 'rdocheckchanged', function (e, data) {
         </code></pre>
 					</figure>
 
-					<p>
-						You can access the radio dom element directly, specify its name, checked/unchecked.
-					</p>
-					<div class="bs-example">
-						<div id=sc-example-basic-radiobox-2></div>
-						<script type="text/javascript">
-							//where the tree will placed
-							var cont = document.getElementById("sc-example-basic-radiobox-2");
 
-							//create a tree, to: is the element to place the tree in
-							var tree = new kzg.Tree({ to: cont });
-							//create a top level of node
-							//tree: the tree object 
-							//text: the text will show on the node
-							//iconCls: the class name of the node icon, you also can use property icon to specify a image url
-							var gNode = new kzg.TreeNode({ tree: tree, text: "demos", icon: 'http://nonexists.png', iconCls: 'demoicon' });
-							tree.addNode(tree.root, gNode);
-
-							for (var i = 0; i < 5; i++) {
-								//the type argument set to checkbox
-								var node = new kzg.TreeNode({ tree: tree, text: "radiobox" + i, type: kzg.Tree.RADIOBOX });
-								tree.addNode(gNode, node);
-								//after add to the tree, you can access the radiobox directly via node.rdoBox
-								node.rdoBox.name = 'node-name-' + i;
-								//set it checked
-								node.rdoBox.checked = true;
-								//set the label style
-								jQuery(node.label).css('margin-left', '5px');
-							}
-						</script>
-					</div>
-					<figure class=highlight>
-						<pre>
-        <code class=language-javascript data-lang=javascript>
-//after add to the tree, you can access the radiobox directly via node.rdoBox
-node.rdoBox.name = 'node-name-' + i;
-//set it checked
-node.rdoBox.checked = true;
-        </code></pre>
-					</figure>
 				</div>
+				<!-- end get started -->
 			</div>
 			<div class=col-md-3 role=complementary>
 				<nav class="bs-docs-sidebar hidden-print hidden-sm hidden-xs">
@@ -436,11 +550,18 @@ node.rdoBox.checked = true;
 						<li> <a href=#download>Download</a> </li>
 						<li> <a href=#example>Getting started</a>
 							<ul class=nav>
-								<li><a href=#example-basic-usage>Basic usage</a></li>
-								<li><a href=#example-basic-event>Events Collapse/Expand</a></li>
-								<li><a href=#example-basic-event-other>Events Select, Context Menu</a></li>
-								<li><a href=#example-basic-checkbox>CheckBox Node</a></li>
-								<li><a href=#example-basic-radiobox>RadioBox Node</a></li>
+								<li><a href=#example-basic-usage>Basic usage</a>
+									<ul class=nav>
+										<li><a href=#sc-example-basic-usage>Create a tree</a></li>
+										<li><a href=#sc-example-basic-usage-2>Another style</a></li>
+										<li><a href=#sc-example-basic-usage-3>Collapse/Expand by code</a></li>
+										<li><a href=#sc-example-basic-usage-4>Find node by key and select by code</a></li>
+									</ul>
+								</li>
+								<li><a href=#example-basic-event>Events collapse/expand</a></li>
+								<li><a href=#example-basic-event-other>Events select, context menu</a></li>
+								<li><a href=#example-basic-checkbox>CheckBox node</a></li>
+								<li><a href=#example-basic-radiobox>RadioBox node</a></li>
 							</ul>
 						</li>
 					</ul> <a href=#top class=back-to-top> Back to top </a> </nav>
